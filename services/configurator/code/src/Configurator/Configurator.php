@@ -82,11 +82,11 @@ class Configurator
             } elseif (preg_match("/^#.*$/i", $line)) {
                 //comment
                 return;
-            } elseif (preg_match("/^([a-z0-9_]+)[=]([a-z0-9@_.-]+[ ]*)(#.*)?$/i", $line, $matches)) {
+            } elseif (preg_match("/^([a-z0-9_]+)[=]([a-z0-9@_. -]+[ ]*)?(#.*)?$/i", $line, $matches)) {
                 //key=val without quotes and possible comment at the end
                 $key = $matches[1];
                 $value = $matches[2];
-            } elseif (preg_match("/^([a-z0-9_]+)[=][\"]([a-z0-9@_. -]+)[\"][ ]*(#.*)?$/i", $line, $matches)) {
+            } elseif (preg_match("/^([a-z0-9_]+)[=][\"]([a-z0-9@_. -]+)?[\"][ ]*(#.*)?$/i", $line, $matches)) {
                 //key=val without quotes and possible comment at the end
                 $key = $matches[1];
                 $value = $matches[2];

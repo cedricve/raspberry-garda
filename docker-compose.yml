@@ -204,9 +204,20 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 85:80
-#    cap_add:
-#      - SYS_ADMIN
-#    privileged: true
+    restart: always
+
+
+  # Media browser
+  mediabrowser:
+    env_file:
+      - configs/environment.conf
+    build:
+      context: ./services/mediabrowser
+      dockerfile: Dockerfile.mediabrowser
+    volumes:
+      - ./configs:/service-configs:ro
+    ports:
+      - 88:80
     restart: always
 
 
