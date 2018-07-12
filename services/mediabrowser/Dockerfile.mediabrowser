@@ -7,8 +7,13 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo "deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib non-free rpi" | tee --append /etc/apt/sources.list
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y git mc joe multitail wget curl \
-    php7.0-cli php-zip composer telnet mosquitto-clients \
-    git libmosquitto-dev mosquitto-dev php-pear php-dev libcurl3-openssl-dev
+    php7.0-cli php-zip composer telnet \
+    git php-pear php-dev
+
+# Install KodExlorer
+
+RUN git clone https://github.com/kalcaddle/KodExplorer.git
+RUN chmod -Rf 777 ./KodExplorer/*
 
 # Add startup script
 
