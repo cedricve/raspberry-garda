@@ -216,6 +216,7 @@ services:
       dockerfile: Dockerfile.mediabrowser
     volumes:
       - ./configs:/service-configs:ro
+      - ./data/kerberos/capture:/kerberos-images
     ports:
       - 88:80
     restart: always
