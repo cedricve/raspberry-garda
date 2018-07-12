@@ -8,15 +8,27 @@ RUN echo "deb http://mirrordirector.raspbian.org/raspbian/ stretch main contrib 
 RUN apt-get update && apt-get -y upgrade
 RUN apt-get install -y git mc joe multitail wget curl \
     php7.0-cli php-zip composer telnet \
+    nginx php7.0 php7.0-curl php7.0-gd php7.0-fpm php7.0-cli php7.0-opcache php7.0-mbstring php7.0-xml php7.0-zip php7.0-mcrypt \
     git php-pear php-dev
+
+# Configure webserver
+
+RUN rm -f /etc/nginx/sites-enabled/default
+ADD ./nginx-mediabrowser.conf /etc/nginx/sites-enabled/mediabrowser.conf
+RUN mkdir -p /var/www/web && chown www-data:www-data /var/www/web
+RUN mkdir /run/php
+RUN touch /run/php/php7.0-fpm.sock
+RUN chmod a+rwx /run/php/php7.0-fpm.sock
 
 # Install KodExlorer
 
-RUN git clone https://github.com/kalcaddle/KodExplorer.git
-RUN chmod -Rf 777 ./KodExplorer/*
+USER www-data
+RUN git clone https://github.com/kalcaddle/KodExplorer.git /var/www/web/public
+RUN chmod -Rf 777 /var/www/web/public/*
 
 # Add startup script
 
+USER root
 ADD ./run.sh /run.sh
 RUN chmod a+x /run.sh
 CMD /run.sh
